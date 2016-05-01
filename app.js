@@ -7,6 +7,8 @@ var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost:27017/AmbulanceEmergency');
 
+var SELECT_SIGNAL = 0;
+
 var ambulances = require('./routes/ambulanceRoute');
 var finalPoint = require('./finalpoints');
 var routes = require('./routes/index');
@@ -206,7 +208,7 @@ io.sockets.on('connection', function (socket) {
   }
 
   var Location = new Array();
-  initTrafficSignals();
+  //initTrafficSignals();
   var counter = 0;
   var currentTrafficSignal;
   socket.emit('getLocation', {});
@@ -224,7 +226,7 @@ io.sockets.on('connection', function (socket) {
     console.log(Location);
 
 
-    TrafficSignal.find({ traffic_signal_id: jsonData.traffic_signal_id }, function(err, data) {
+    TrafficSignal.find({ traffic_signal_id: SELECT_SIGNAL }, function(err, data) {
   	if (err) throw err;
   	currentTrafficSignal = data[0];
     console.log('TRAFFICSIGNAL :' + currentTrafficSignal);
