@@ -251,6 +251,7 @@ io.sockets.on('connection', function (socket) {
 	    //turn it off in 5mins.
       //res.json({status:true, side:side.side});
       console.log('EMITTING GREEN');
+      socket.emit("GreenSignal", {status:true});
       /*
       IF_GREEN = true;
       setTimeout(function(){ IF_GREEN = false; }, 5000);
