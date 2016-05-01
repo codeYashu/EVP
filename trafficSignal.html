@@ -1,0 +1,40 @@
+<html>
+<head>
+<script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
+<script
+			  src="https://code.jquery.com/jquery-2.2.3.min.js"
+			  integrity="sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo="
+			  crossorigin="anonymous"></script>
+<script>
+
+
+var SIDE = 1;
+var socket = io.connect('http://localhost:3000/');
+socket.on('getLocation', function (data) {
+  console.log('yaay!');
+  /*socket.emit('sendLocation', JSON.stringify({traffic_signal_id: 0, location:{lat:12.924945, lon:77.6333847},
+    key:'9e4207dacba9b1a2e4185a80ddb88271302db0501455d49d0539cf0a7ba52ba7'}));*/
+});
+
+socket.on('lightsGreen', function (data) {
+  var jsonData = JSON.parse(data);
+  console.log('REQUEST TO GREEN');
+  if(SIDE == jsonData.side){
+    $("body").css("background-color", "green");
+    //$('body').background('beforeunload', function(){
+    //  socket.close();
+    setTimeout(function(){ $("body").css("background-color", "red"); }, 5000);
+  }
+  /*socket.emit('sendLocation', JSON.stringify({traffic_signal_id: 0, location:{lat:12.924945, lon:77.6333847},
+    key:'9e4207dacba9b1a2e4185a80ddb88271302db0501455d49d0539cf0a7ba52ba7'}));*/
+});
+/*
+$(window).on('beforeunload', function(){
+  socket.close();
+});*/
+</script>
+</head>
+<body>
+
+</body>
+</html>
