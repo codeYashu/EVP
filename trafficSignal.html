@@ -9,7 +9,7 @@
 
 
 var SIDE = 1;
-var socket = io.connect('http://localhost:3000/');
+var socket = io.connect('http://188.166.239.209:3000/');
 socket.on('getLocation', function (data) {
   console.log('yaay!');
   /*socket.emit('sendLocation', JSON.stringify({traffic_signal_id: 0, location:{lat:12.924945, lon:77.6333847},

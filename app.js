@@ -206,10 +206,11 @@ io.sockets.on('connection', function (socket) {
   }
 
   var Location = new Array();
-  //initTrafficSignals();
+  initTrafficSignals();
   var counter = 0;
   var currentTrafficSignal;
   socket.emit('getLocation', {});
+  socket.emit('connected', {status:true});
   //socket.emit('lightsGreen', JSON.stringify({side:1}));
 
   socket.on('sendLocation', function (data) {
@@ -231,6 +232,7 @@ io.sockets.on('connection', function (socket) {
 
     if(counter<5){
 	  socket.emit('getLocation', {});
+    socket.emit('connected', {status:true});
     }else{
       var lat1 = 12.917248;
       var lon1 = 77.622710;

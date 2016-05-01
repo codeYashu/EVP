@@ -1,6 +1,6 @@
 var mongoose = require('mongoose')
 var Ambulance = require('../models/Ambulance');
-var ambulance = Ambulance.Ambulance();
+var ambulance = Ambulance.Ambulance;
 var Ambulances = [];
 var express = require('express');
 var router = express.Router();
@@ -9,13 +9,14 @@ var AMBULANCE_RANGE = 1;
 //var ambulance = require('./ambulanceRoute');
 var trafficSignal = require('../models/TrafficSignal');
 var TrafficSignal = trafficSignal.TrafficSignal({
-  traffic_signal_id: 1,
+  traffic_signal_id: 10,
   traffic_signal_service: 1,
   traffic_signal_location: {
-                        lat: 12.9211369,
-                        lon: 77.620200
+                        lat: 12.917248,
+                        lon: 77.622710
   }
 });
+TrafficSignal.save()
 var app = require('../app');
 var i=0;
 var prev=0;
@@ -39,26 +40,28 @@ router.get('/loc', function(req, res){
 });
 
 function getConfirmation(lat1, lon1){
-	//get all the TrafficSignals in an array
+	  //get all the TrafficSignals in an array
     //find the shortest distance element
     //get the traffic signal id
+    console.log(lat1 + " " + lon1 + " " + TrafficSignal.traffic_signal_location.lat + " " + TrafficSignal.traffic_signal_location.lon);
     var distanceBetween = distance(lat1,
 								                   lon1,
                                    TrafficSignal.traffic_signal_location.lat,
                                    TrafficSignal.traffic_signal_location.lon);
     console.log(distanceBetween);
     if(distanceBetween <= AMBULANCE_RANGE){
-        var ambulance = new Ambulance({
-          ambulance_id: ++ambulance_id,
+        ambulance_id = ambulance_id + 1;
+        var new_ambulance = new ambulance({
+          ambulance_id: ambulance_id,
           ambulance_service: 0,
           ambulance_location: {
                                 lat: lat1,
                                 lon: lon1,
           }
         });
-        return {status:true, traffic_signal_id:ambulance_id};
+        return {status:true, traffic_signal_id:TrafficSignal.traffic_signal_id};
     }else{
-        return {status:false, traffic_signal_id:1};
+        return {status:false};
     }
     //return status and traffic id
 
